@@ -1,0 +1,30 @@
+receivers:
+  otlp:
+    protocols:
+      grpc:
+        endpoint: localhost:4317
+        max_recv_msg_size_mib: 16
+      http:
+        endpoint: localhost:4318
+        
+        
+
+exporters:
+  otlp/signoz:
+    endpoint: http://otelcollector.dev.optimizor.app:80
+    tls:
+      insecure: true
+
+    
+
+service:
+  
+  extensions:
+    # No healthcheck key
+
+  pipelines:
+    traces:
+      receivers: [otlp]
+      exporters: [otlp/signoz]
+
+
